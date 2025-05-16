@@ -6,6 +6,7 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -53,6 +54,15 @@ fun WebView() {
                 ): WebResourceResponse? {
                     return assetLoader.shouldInterceptRequest(request.url)
                 }
+            }
+
+            // Set up a download listener for when the user tries to export the contacts.
+            setDownloadListener { _, _, _, _, _ ->
+                Toast.makeText(
+                    context,
+                    "Use this app from a web browser to export contacts.",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
 
             // Load the initial URL using the same https scheme as the WebViewAssetLoader.

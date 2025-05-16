@@ -87,4 +87,9 @@ export class ContactService {
     )
     this.contactsBehaviorSubject.next(contacts)
   }
+
+  // Method to replace the entire list of contacts with a new list.
+  replaceContacts(contacts: Contact[]) {
+    this.contactsBehaviorSubject.next(contacts)
+  }
 }
