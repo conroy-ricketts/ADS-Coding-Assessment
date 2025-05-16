@@ -104,8 +104,8 @@ export class ContactListComponent implements OnInit {
 
     // For now, we will just filter by the contact name and company name.
     return this.contacts.filter(contact =>
-      contact.ContactName.toLowerCase().includes(searchConstraint) ||
-      contact.CompanyName.toLowerCase().includes(searchConstraint)
+      (contact.ContactName?.toLowerCase().includes(searchConstraint) ?? false) ||
+      (contact.CompanyName?.toLowerCase().includes(searchConstraint) ?? false)
     )
   }
 
