@@ -36,6 +36,9 @@ import { Contact, ContactService } from '../../contact.service'
         <input [(ngModel)]="newContact.Fax" name="Fax" placeholder="Fax" /><br>
         <input [(ngModel)]="newContact.Region" name="Region" placeholder="Region" /><br>
         <button type="submit">Save</button>
+        <div *ngIf="showErrorMessage">
+          <strong>Fill the missing required fields.</strong>
+        </div>
       </form>
     </div>
     <body *ngFor="let contact of filteredContacts()">
@@ -90,6 +93,7 @@ export class ContactListComponent implements OnInit {
   newContact: Contact = {} as Contact
   editID: string | null = null
   editContact: Contact = {} as Contact
+  showErrorMessage: boolean = false
 
   constructor(private contactService: ContactService) { }
 
@@ -111,9 +115,14 @@ export class ContactListComponent implements OnInit {
 
   // Method to add a new contact to the list.
   addContact() {
-    this.contactService.addContact({ ...this.newContact })
-    this.showAddForm = false
-    this.newContact = {} as Contact
+    if (this.newContactValid()) {
+      this.contactService.addContact({ ...this.newContact })
+      this.showAddForm = false
+      this.newContact = {} as Contact
+      this.showErrorMessage = false
+    } else {
+      this.showErrorMessage = true
+    }
   }
 
   // Method to update an existing contact in the list.
@@ -235,5 +244,19 @@ export class ContactListComponent implements OnInit {
 
     // Reset the input so the same file can be imported again if needed.
     input.value = ''
+  }
+
+  // Method to validate the data entered for a new contact before submission.
+  newContactValid(): boolean {
+    return this.newContact.ContactName !== undefined &&
+      this.newContact.CustomerID !== undefined &&
+      this.newContact.CompanyName !== undefined &&
+      this.newContact.Address !== undefined &&
+      this.newContact.City !== undefined &&
+      this.newContact.Country !== undefined &&
+      this.newContact.Email !== undefined &&
+      this.newContact.Phone !== undefined &&
+      this.newContact.ContactTitle !== undefined &&
+      this.newContact.PostalCode !== undefined
   }
 }
