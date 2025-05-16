@@ -7,16 +7,19 @@ import { Contact, ContactService } from '../../contact.service'
   selector: 'app-contact-list',
   standalone: true,
   imports: [FormsModule, CommonModule],
+  styleUrls: ['./contactlist.component.css'],
   template: `
     <h1>Contacts</h1>
-    <button (click)="exportContacts()">Export Contacts</button>
-    <input type="file" accept=".xml" (change)="importContacts($event)" style="margin-left:10px" /> <br>
-    <input [(ngModel)]="queryString" placeholder="Filter by either contact name or company name" />
+    <input type="file" accept=".xml" (change)="importContacts($event)" /> <br>
+    <button (click)="exportContacts()" style="margin-bottom: 10px">Export Contacts</button> <br>
+    <input [(ngModel)]="queryString" placeholder="Filter by name or company name" class="long-text-input" />
     <button (click)="showAddForm = !showAddForm">{{ showAddForm ? 'Cancel' : 'Add Contact' }}</button>
-    <div *ngIf="showAddForm">
-      <h3>Add Contact</h3>
+    <div *ngIf="showAddForm" class="contact-modal">
+      <h2>Add Contact</h2>
       <form (ngSubmit)="addContact()">
-        <strong>Required Fields</strong><br>
+        <div style="margin-bottom: 10px">
+          <strong>Required Fields</strong>
+        </div>
         <input [(ngModel)]="newContact.ContactName" name="ContactName" placeholder="Name" required /><br>
         <input [(ngModel)]="newContact.CustomerID" name="CustomerID" placeholder="Customer ID" required /><br>
         <input [(ngModel)]="newContact.CompanyName" name="CompanyName" placeholder="Company Name" required /><br> 
@@ -27,14 +30,16 @@ import { Contact, ContactService } from '../../contact.service'
         <input [(ngModel)]="newContact.Phone" name="Phone" placeholder="Phone" required /><br>
         <input [(ngModel)]="newContact.ContactTitle" name="ContactTitle" placeholder="Title" required /><br>
         <input [(ngModel)]="newContact.PostalCode" name="PostalCode" placeholder="Postal Code" required /><br>
-        <strong>Optional Fields</strong><br>
+        <div style="margin-bottom: 10px">
+          <strong>Optional Fields</strong><br>
+        </div>
         <input [(ngModel)]="newContact.Fax" name="Fax" placeholder="Fax" /><br>
         <input [(ngModel)]="newContact.Region" name="Region" placeholder="Region" /><br>
         <button type="submit">Save</button>
       </form>
     </div>
     <body *ngFor="let contact of filteredContacts()">
-      <div *ngIf="editID !== contact.CustomerID">
+      <div *ngIf="editID !== contact.CustomerID" class="contact-card">
         <h2>{{ contact.ContactName }}</h2>
         <strong>Company:</strong> {{ contact.CompanyName }}<br>
         <strong>Address:</strong> {{ contact.Address }}<br>
@@ -47,10 +52,12 @@ import { Contact, ContactService } from '../../contact.service'
         <strong>Customer ID:</strong> {{ contact.CustomerID }}<br>
         <strong>Contact Title:</strong> {{ contact.ContactTitle }}<br>
         <strong>Postal Code:</strong> {{ contact.PostalCode }}<br>
-        <button (click)="startEdit(contact)">Edit</button>
-        <button (click)="deleteContact(contact.CustomerID)">Delete</button>
+        <div class="contact-actions">
+          <button (click)="startEdit(contact)">Edit</button>
+          <button (click)="deleteContact(contact.CustomerID)">Delete</button>
+        </div>
       </div>
-      <div *ngIf="editID === contact.CustomerID">
+      <div *ngIf="editID === contact.CustomerID" class="contact-card">
         <form (ngSubmit)="updateContact()">
         <strong>Required Fields</strong><br>
           <input [(ngModel)]="editContact.ContactName" name="editContactName" placeholder="Name" required /><br>
@@ -66,8 +73,10 @@ import { Contact, ContactService } from '../../contact.service'
           <strong>Optional Fields</strong><br>
           <input [(ngModel)]="editContact.Fax" name="editFax" placeholder="Fax" /><br>
           <input [(ngModel)]="editContact.Region" name="editRegion" placeholder="Region" /><br>
-          <button type="submit">Update</button>
-          <button type="button" (click)="editID = null">Cancel</button>
+          <div class="contact-actions">
+            <button type="submit">Update</button>
+            <button type="button" (click)="editID = null">Cancel</button>
+          </div>
         </form>
       </div>
     </body>

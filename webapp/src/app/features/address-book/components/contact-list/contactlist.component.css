@@ -1,0 +1,50 @@
+.contact-card {
+  background: #f1f7ff;
+  border: 1px solid #e3eafc;
+  border-radius: 6px;
+  margin-bottom: 18px;
+  padding: 18px 16px;
+  box-shadow: 0 1px 4px rgba(25, 118, 210, 0.06);
+}
+
+.contact-card h2 {
+  margin-top: 0;
+  color: #1565c0;
+}
+
+.contact-actions {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+.long-text-input {
+  width: 60%;
+  margin-right: 10px;
+}
+
+.contact-modal {
+  background: #f1f7ff;
+  border: 1px solid #e3eafc;
+  border-radius: 6px;
+  margin: 20px 10px 20px 10px;
+  padding: 18px 16px;
+  box-shadow: 0 1px 4px rgba(25, 118, 210, 0.06);
+}
+
+.contact-modal h2 {
+  margin-top: 0;
+  color: #1565c0;
+}
+
+input[type="file"] {
+  margin: 8px 0;
+}
+
+input[type="text"], input[type="email"] {
+  width: 95%;
+}
+
+form input, form button {
+  margin-bottom: 8px;
+}
